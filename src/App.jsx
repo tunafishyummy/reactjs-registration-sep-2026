@@ -1,10 +1,39 @@
+import { useState } from 'react'
 import './App.css'
 
 function App() {
+  const [isOtherGender, setIsOtherGender] = useState(false)
+  const [canRegister, setCanRegister] = useState(false)
+
+  function updateRegisterButtonState(event) {
+    const page = event.currentTarget
+    const otherRadio = page.querySelector('#other')
+    let allComplete = true
+
+    page.querySelectorAll('input[required], select[required], #genderOther').forEach((field) => {
+      if (field.type === 'radio') return
+      if (field.type === 'checkbox') {
+        if (!field.checked) allComplete = false
+        return
+      }
+      if (field.id === 'genderOther' && !otherRadio.checked) return
+      if (field.value.trim() === '') allComplete = false
+    })
+
+    const anyGenderSelected = page.querySelector('input[name="Gender"]:checked') !== null
+    setCanRegister(allComplete && anyGenderSelected)
+  }
+
+  function handleChange(event) {
+    if (event.target.name === 'Gender') {
+      setIsOtherGender(event.target.id === 'other' && event.target.checked)
+    }
+    updateRegisterButtonState(event)
+  }
 
   return (
     <>
-      <main className="page-shell">
+      <main className="page-shell" onInput={updateRegisterButtonState} onChange={handleChange}>
   <h1>College Admissions</h1><br />
   <table className="form-table">
     <tbody><tr>
@@ -32,7 +61,7 @@ function App() {
           <div className="field-row dob-row">
             <div className="field">
               <select id="dobMonth" name="dobMonth" required>
-                <option value>Select Month</option>
+                <option value="">Select Month</option>
                 <option value="January">January</option>
                 <option value="February">February</option>
                 <option value="March">March</option>
@@ -50,7 +79,7 @@ function App() {
             </div>
             <div className="field">
               <select id="dobDay" name="dobDay" required>
-                <option value>Select Day</option>
+                <option value="">Select Day</option>
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
@@ -87,7 +116,7 @@ function App() {
             </div>
             <div className="field">
               <select id="dobYear" name="dobYear" required>
-                <option value>Select Year</option>
+                <option value="">Select Year</option>
                 <option value={1900}>1900</option>
                 <option value={1901}>1901</option>
                 <option value={1902}>1902</option>
@@ -226,12 +255,12 @@ function App() {
           <h3 className="table-text">Gender</h3>
           <div className="gender-combo">
             <div className="radio-group">
-              <label><input type="radio" id="male" name="Gender" defaultValue="male" required /> Male</label>
-              <label><input type="radio" id="female" name="Gender" defaultValue="female" required /> Female</label>
-              <label><input type="radio" id="other" name="Gender" defaultValue="other" required /> Other</label>
+              <label><input type="radio" id="male" name="Gender" value="male" required /> Male</label>
+              <label><input type="radio" id="female" name="Gender" value="female" required /> Female</label>
+              <label><input type="radio" id="other" name="Gender" value="other" required /> Other</label>
             </div>
-            <div id="genderOtherField" className="field gender-other-field">
-              <input id="genderOther" type="text" name="genderOther" />
+            <div id="genderOtherField" className="field gender-other-field" style={{ display: isOtherGender ? 'flex' : 'none' }}>
+              <input id="genderOther" type="text" name="genderOther" required={isOtherGender} />
               <label htmlFor="genderOther">Specify Gender <span className="required-star">*</span></label>
             </div>
           </div>
@@ -239,7 +268,7 @@ function App() {
         <td>
           <h3 className="table-text">Of Which Country are You a Citizen? <span className="required-star">*</span></h3>
           <select id="country" name="country" required>
-            <option value>Select Country</option>
+            <option value="">Select Country</option>
             <option value="Afghanistan">Afghanistan</option>
             <option value="Albania">Albania</option>
             <option value="Algeria">Algeria</option>
@@ -451,119 +480,119 @@ function App() {
           <div className="field phone-field">
             <div className="phone-input-row">
               <select id="phoneCountryPrefix" name="phoneCountryPrefix">
-                <option value={+1}>+1 (United States)</option>
-                <option value={+1}>+1 (Canada)</option>
-                <option value={+7}>+7 (Russia)</option>
-                <option value={+20}>+20 (Egypt)</option>
-                <option value={+27}>+27 (South Africa)</option>
-                <option value={+30}>+30 (Greece)</option>
-                <option value={+31}>+31 (Netherlands)</option>
-                <option value={+32}>+32 (Belgium)</option>
-                <option value={+33}>+33 (France)</option>
-                <option value={+34}>+34 (Spain)</option>
-                <option value={+36}>+36 (Hungary)</option>
-                <option value={+39}>+39 (Italy)</option>
-                <option value={+41}>+41 (Switzerland)</option>
-                <option value={+43}>+43 (Austria)</option>
-                <option value={+44}>+44 (United Kingdom)</option>
-                <option value={+45}>+45 (Denmark)</option>
-                <option value={+46}>+46 (Sweden)</option>
-                <option value={+47}>+47 (Norway)</option>
-                <option value={+48}>+48 (Poland)</option>
-                <option value={+49}>+49 (Germany)</option>
-                <option value={+51}>+51 (Peru)</option>
-                <option value={+52}>+52 (Mexico)</option>
-                <option value={+53}>+53 (Cuba)</option>
-                <option value={+54}>+54 (Argentina)</option>
-                <option value={+55}>+55 (Brazil)</option>
-                <option value={+56}>+56 (Chile)</option>
-                <option value={+57}>+57 (Colombia)</option>
-                <option value={+58}>+58 (Venezuela)</option>
-                <option value={+60}>+60 (Malaysia)</option>
-                <option value={+61}>+61 (Australia)</option>
-                <option value={+62}>+62 (Indonesia)</option>
-                <option value={+63}>+63 (Philippines)</option>
-                <option value={+64}>+64 (New Zealand)</option>
-                <option value={+65}>+65 (Singapore)</option>
-                <option value={+66}>+66 (Thailand)</option>
-                <option value={+81}>+81 (Japan)</option>
-                <option value={+82}>+82 (South Korea)</option>
-                <option value={+84}>+84 (Vietnam)</option>
-                <option value={+86}>+86 (China)</option>
-                <option value={+90}>+90 (Turkey)</option>
-                <option value={+91}>+91 (India)</option>
-                <option value={+92}>+92 (Pakistan)</option>
-                <option value={+94}>+94 (Sri Lanka)</option>
-                <option value={+95}>+95 (Myanmar)</option>
-                <option value={+98}>+98 (Iran)</option>
-                <option value={+211}>+211 (South Sudan)</option>
-                <option value={+212}>+212 (Morocco)</option>
-                <option value={+213}>+213 (Algeria)</option>
-                <option value={+216}>+216 (Tunisia)</option>
-                <option value={+218}>+218 (Libya)</option>
-                <option value={+220}>+220 (Gambia)</option>
-                <option value={+221}>+221 (Senegal)</option>
-                <option value={+223}>+223 (Mali)</option>
-                <option value={+225}>+225 (Cote d'Ivoire)</option>
-                <option value={+234}>+234 (Nigeria)</option>
-                <option value={+250}>+250 (Rwanda)</option>
-                <option value={+254}>+254 (Kenya)</option>
-                <option value={+255}>+255 (Tanzania)</option>
-                <option value={+256}>+256 (Uganda)</option>
-                <option value={+260}>+260 (Zambia)</option>
-                <option value={+263}>+263 (Zimbabwe)</option>
-                <option value={+264}>+264 (Namibia)</option>
-                <option value={+265}>+265 (Malawi)</option>
-                <option value={+266}>+266 (Lesotho)</option>
-                <option value={+267}>+267 (Botswana)</option>
-                <option value={+268}>+268 (Swaziland)</option>
-                <option value={+351}>+351 (Portugal)</option>
-                <option value={+352}>+352 (Luxembourg)</option>
-                <option value={+353}>+353 (Ireland)</option>
-                <option value={+354}>+354 (Iceland)</option>
-                <option value={+355}>+355 (Albania)</option>
-                <option value={+356}>+356 (Malta)</option>
-                <option value={+358}>+358 (Finland)</option>
-                <option value={+370}>+370 (Lithuania)</option>
-                <option value={+371}>+371 (Latvia)</option>
-                <option value={+372}>+372 (Estonia)</option>
-                <option value={+373}>+373 (Moldova)</option>
-                <option value={+375}>+375 (Belarus)</option>
-                <option value={+381}>+381 (Serbia)</option>
-                <option value={+382}>+382 (Montenegro)</option>
-                <option value={+385}>+385 (Croatia)</option>
-                <option value={+386}>+386 (Slovenia)</option>
-                <option value={+420}>+420 (Czech Republic)</option>
-                <option value={+421}>+421 (Slovakia)</option>
-                <option value={+500}>+500 (Falkland Islands)</option>
-                <option value={+595}>+595 (Paraguay)</option>
-                <option value={+598}>+598 (Uruguay)</option>
-                <option value={+850}>+850 (North Korea)</option>
-                <option value={+852}>+852 (Hong Kong)</option>
-                <option value={+853}>+853 (Macau)</option>
-                <option value={+855}>+855 (Cambodia)</option>
-                <option value={+856}>+856 (Laos)</option>
-                <option value={+880}>+880 (Bangladesh)</option>
-                <option value={+886}>+886 (Taiwan)</option>
-                <option value={+961}>+961 (Lebanon)</option>
-                <option value={+962}>+962 (Jordan)</option>
-                <option value={+963}>+963 (Syria)</option>
-                <option value={+964}>+964 (Iraq)</option>
-                <option value={+965}>+965 (Kuwait)</option>
-                <option value={+966}>+966 (Saudi Arabia)</option>
-                <option value={+971}>+971 (United Arab Emirates)</option>
-                <option value={+972}>+972 (Israel)</option>
-                <option value={+973}>+973 (Bahrain)</option>
-                <option value={+974}>+974 (Qatar)</option>
-                <option value={+975}>+975 (Bhutan)</option>
-                <option value={+976}>+976 (Mongolia)</option>
-                <option value={+977}>+977 (Nepal)</option>
-                <option value={+992}>+992 (Tajikistan)</option>
-                <option value={+993}>+993 (Turkmenistan)</option>
-                <option value={+994}>+994 (Azerbaijan)</option>
-                <option value={+995}>+995 (Georgia)</option>
-                <option value={+996}>+996 (Kyrgyzstan)</option>
-                <option value={+998}>+998 (Uzbekistan)</option>
+                <option value="+1">+1 (United States)</option>
+                <option value="+1">+1 (Canada)</option>
+                <option value="+7">+7 (Russia)</option>
+                <option value="+20">+20 (Egypt)</option>
+                <option value="+27">+27 (South Africa)</option>
+                <option value="+30">+30 (Greece)</option>
+                <option value="+31">+31 (Netherlands)</option>
+                <option value="+32">+32 (Belgium)</option>
+                <option value="+33">+33 (France)</option>
+                <option value="+34">+34 (Spain)</option>
+                <option value="+36">+36 (Hungary)</option>
+                <option value="+39">+39 (Italy)</option>
+                <option value="+41">+41 (Switzerland)</option>
+                <option value="+43">+43 (Austria)</option>
+                <option value="+44">+44 (United Kingdom)</option>
+                <option value="+45">+45 (Denmark)</option>
+                <option value="+46">+46 (Sweden)</option>
+                <option value="+47">+47 (Norway)</option>
+                <option value="+48">+48 (Poland)</option>
+                <option value="+49">+49 (Germany)</option>
+                <option value="+51">+51 (Peru)</option>
+                <option value="+52">+52 (Mexico)</option>
+                <option value="+53">+53 (Cuba)</option>
+                <option value="+54">+54 (Argentina)</option>
+                <option value="+55">+55 (Brazil)</option>
+                <option value="+56">+56 (Chile)</option>
+                <option value="+57">+57 (Colombia)</option>
+                <option value="+58">+58 (Venezuela)</option>
+                <option value="+60">+60 (Malaysia)</option>
+                <option value="+61">+61 (Australia)</option>
+                <option value="+62">+62 (Indonesia)</option>
+                <option value="+63">+63 (Philippines)</option>
+                <option value="+64">+64 (New Zealand)</option>
+                <option value="+65">+65 (Singapore)</option>
+                <option value="+66">+66 (Thailand)</option>
+                <option value="+81">+81 (Japan)</option>
+                <option value="+82">+82 (South Korea)</option>
+                <option value="+84">+84 (Vietnam)</option>
+                <option value="+86">+86 (China)</option>
+                <option value="+90">+90 (Turkey)</option>
+                <option value="+91">+91 (India)</option>
+                <option value="+92">+92 (Pakistan)</option>
+                <option value="+94">+94 (Sri Lanka)</option>
+                <option value="+95">+95 (Myanmar)</option>
+                <option value="+98">+98 (Iran)</option>
+                <option value="+211">+211 (South Sudan)</option>
+                <option value="+212">+212 (Morocco)</option>
+                <option value="+213">+213 (Algeria)</option>
+                <option value="+216">+216 (Tunisia)</option>
+                <option value="+218">+218 (Libya)</option>
+                <option value="+220">+220 (Gambia)</option>
+                <option value="+221">+221 (Senegal)</option>
+                <option value="+223">+223 (Mali)</option>
+                <option value="+225">+225 (Cote d'Ivoire)</option>
+                <option value="+234">+234 (Nigeria)</option>
+                <option value="+250">+250 (Rwanda)</option>
+                <option value="+254">+254 (Kenya)</option>
+                <option value="+255">+255 (Tanzania)</option>
+                <option value="+256">+256 (Uganda)</option>
+                <option value="+260">+260 (Zambia)</option>
+                <option value="+263">+263 (Zimbabwe)</option>
+                <option value="+264">+264 (Namibia)</option>
+                <option value="+265">+265 (Malawi)</option>
+                <option value="+266">+266 (Lesotho)</option>
+                <option value="+267">+267 (Botswana)</option>
+                <option value="+268">+268 (Swaziland)</option>
+                <option value="+351">+351 (Portugal)</option>
+                <option value="+352">+352 (Luxembourg)</option>
+                <option value="+353">+353 (Ireland)</option>
+                <option value="+354">+354 (Iceland)</option>
+                <option value="+355">+355 (Albania)</option>
+                <option value="+356">+356 (Malta)</option>
+                <option value="+358">+358 (Finland)</option>
+                <option value="+370">+370 (Lithuania)</option>
+                <option value="+371">+371 (Latvia)</option>
+                <option value="+372">+372 (Estonia)</option>
+                <option value="+373">+373 (Moldova)</option>
+                <option value="+375">+375 (Belarus)</option>
+                <option value="+381">+381 (Serbia)</option>
+                <option value="+382">+382 (Montenegro)</option>
+                <option value="+385">+385 (Croatia)</option>
+                <option value="+386">+386 (Slovenia)</option>
+                <option value="+420">+420 (Czech Republic)</option>
+                <option value="+421">+421 (Slovakia)</option>
+                <option value="+500">+500 (Falkland Islands)</option>
+                <option value="+595">+595 (Paraguay)</option>
+                <option value="+598">+598 (Uruguay)</option>
+                <option value="+850">+850 (North Korea)</option>
+                <option value="+852">+852 (Hong Kong)</option>
+                <option value="+853">+853 (Macau)</option>
+                <option value="+855">+855 (Cambodia)</option>
+                <option value="+856">+856 (Laos)</option>
+                <option value="+880">+880 (Bangladesh)</option>
+                <option value="+886">+886 (Taiwan)</option>
+                <option value="+961">+961 (Lebanon)</option>
+                <option value="+962">+962 (Jordan)</option>
+                <option value="+963">+963 (Syria)</option>
+                <option value="+964">+964 (Iraq)</option>
+                <option value="+965">+965 (Kuwait)</option>
+                <option value="+966">+966 (Saudi Arabia)</option>
+                <option value="+971">+971 (United Arab Emirates)</option>
+                <option value="+972">+972 (Israel)</option>
+                <option value="+973">+973 (Bahrain)</option>
+                <option value="+974">+974 (Qatar)</option>
+                <option value="+975">+975 (Bhutan)</option>
+                <option value="+976">+976 (Mongolia)</option>
+                <option value="+977">+977 (Nepal)</option>
+                <option value="+992">+992 (Tajikistan)</option>
+                <option value="+993">+993 (Turkmenistan)</option>
+                <option value="+994">+994 (Azerbaijan)</option>
+                <option value="+995">+995 (Georgia)</option>
+                <option value="+996">+996 (Kyrgyzstan)</option>
+                <option value="+998">+998 (Uzbekistan)</option>
               </select>
               <input id="phone" type="tel" name="phone" required />
             </div>
@@ -605,11 +634,11 @@ function App() {
   <div className="checkbox-row">
     <label htmlFor="acceptTerms">
       <input id="acceptTerms" type="checkbox" name="acceptTerms" required />
-      I agree to the <a id="termsLink" href="javascript:void(0)">Terms of service</a> and <a id="privacyLink" href="javascript:void(0)">privacy policy</a><span className="required-star">*</span>
+      I agree to the <a id="termsLink" href="#" onClick={(event) => { event.preventDefault(); window.alert('Terms of service') }}>Terms of service</a> and <a id="privacyLink" href="#" onClick={(event) => { event.preventDefault(); window.alert('Privacy policy') }}>privacy policy</a><span className="required-star">*</span>
     </label>
   </div>
   <div className="button-row">
-    <button id="registerButton" type="button" disabled>Register</button>
+    <button id="registerButton" type="button" disabled={!canRegister} onClick={() => window.alert('Registration complete!')}>Register</button>
   </div>
   <p className="required-note">Fields marked with <span className="required-star">*</span> are required.</p>
     </main>
