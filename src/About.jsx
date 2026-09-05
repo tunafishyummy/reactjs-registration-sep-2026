@@ -3,7 +3,7 @@ function About() {
     <main className="page-shell">
       <h1>About Us</h1>
       <p>
-        Learn more about our college and admissions process.
+        About page
       </p>
     </main>
   )
