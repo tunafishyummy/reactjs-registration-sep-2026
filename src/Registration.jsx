@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 
 function Registration() {
   const [isOtherGender, setIsOtherGender] = useState(false)

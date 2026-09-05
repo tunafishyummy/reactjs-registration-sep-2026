@@ -1,18 +1,20 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router'
+import { BrowserRouter, NavLink, Routes, Route } from 'react-router'
 import Home from './Home'
 import About from './About'
 import Registration from './Registration'
-import './App.css'
 
 function App() {
   return (
     <BrowserRouter>
 
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/registration">Registration</Link>
-        <Link to="/about">About</Link>
-      </nav>
+      <header className="site-header">
+        <NavLink className="site-brand" to="/">College Admissions</NavLink>
+        <nav className="site-nav" aria-label="Primary navigation">
+          <NavLink to="/" end>Home</NavLink>
+          <NavLink to="/registration">Registration</NavLink>
+          <NavLink to="/about">About</NavLink>
+        </nav>
+      </header>
 
       <Routes>
         <Route path="/" element={<Home />} />
