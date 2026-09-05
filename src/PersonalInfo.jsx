@@ -44,6 +44,7 @@ function PersonalInfo({ isOtherGender }) {
             </div>
             <div className="field">
               <select id="dobDay" name="dobDay" required>
+                // #region Birth day
                 <option value="">Select Day</option>
                 <option value={1}>1</option>
                 <option value={2}>2</option>
@@ -76,11 +77,13 @@ function PersonalInfo({ isOtherGender }) {
                 <option value={29}>29</option>
                 <option value={30}>30</option>
                 <option value={31}>31</option>
+                // #endregion
               </select>
               <label htmlFor="dobDay">Day <span className="required-star">*</span></label>
             </div>
             <div className="field">
               <select id="dobYear" name="dobYear" required>
+                // #region Birth year
                 <option value="">Select Year</option>
                 <option value={1900}>1900</option>
                 <option value={1901}>1901</option>
@@ -209,6 +212,7 @@ function PersonalInfo({ isOtherGender }) {
                 <option value={2024}>2024</option>
                 <option value={2025}>2025</option>
                 <option value={2026}>2026</option>
+                // #endregion
               </select>
               <label htmlFor="dobYear">Year <span className="required-star">*</span></label>
             </div>
@@ -233,6 +237,7 @@ function PersonalInfo({ isOtherGender }) {
         <td>
           <h3 className="table-text">Of Which Country are You a Citizen? <span className="required-star">*</span></h3>
           <select id="country" name="country" required>
+            // #region Country citizenship
             <option value="">Select Country</option>
             <option value="Afghanistan">Afghanistan</option>
             <option value="Albania">Albania</option>
@@ -431,6 +436,7 @@ function PersonalInfo({ isOtherGender }) {
             <option value="Yemen">Yemen</option>
             <option value="Zambia">Zambia</option>
             <option value="Zimbabwe">Zimbabwe</option>
+            // #endregion
           </select>
         </td>
       </tr>
@@ -445,6 +451,7 @@ function PersonalInfo({ isOtherGender }) {
           <div className="field phone-field">
             <div className="phone-input-row">
               <select id="phoneCountryPrefix" name="phoneCountryPrefix">
+                // #region Country phones
                 <option value="+1">+1 (United States)</option>
                 <option value="+1">+1 (Canada)</option>
                 <option value="+7">+7 (Russia)</option>
@@ -558,6 +565,7 @@ function PersonalInfo({ isOtherGender }) {
                 <option value="+995">+995 (Georgia)</option>
                 <option value="+996">+996 (Kyrgyzstan)</option>
                 <option value="+998">+998 (Uzbekistan)</option>
+                // #endregion
               </select>
               <input id="phone" type="tel" name="phone" required />
             </div>
