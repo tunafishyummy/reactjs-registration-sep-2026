@@ -1,4 +1,5 @@
-import { BrowserRouter, NavLink, Routes, Route } from 'react-router'
+import { BrowserRouter, Routes, Route } from 'react-router'
+import Navbar from './Navbar'
 import Home from './Home'
 import About from './About'
 import Registration from './Registration'
@@ -7,14 +8,7 @@ function App() {
   return (
     <BrowserRouter>
 
-      <header className="site-header">
-        <NavLink className="site-brand" to="/">College Admissions</NavLink>
-        <nav className="site-nav" aria-label="Primary navigation">
-          <NavLink to="/" end>Home</NavLink>
-          <NavLink to="/registration">Registration</NavLink>
-          <NavLink to="/about">About</NavLink>
-        </nav>
-      </header>
+      <Navbar />
 
       <Routes>
         <Route path="/" element={<Home />} />
